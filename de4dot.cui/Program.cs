@@ -120,10 +120,8 @@ namespace de4dot.cui {
                 Logger.n("Mods by:");
                 Console.ForegroundColor = ConsoleColor.Cyan;
 				Logger.n("de4dot Mod by TheProxy");
-				Logger.n("de4dot Reactor v4.9 Mod by PC-RET");
-				Logger.n("de4dot Reactor v5.0 Mod by wuhensoft");
                 Logger.n("");
-                Logger.n("Compiled by stsm/liqf build 20180122");
+                Logger.n("Compiled by stsm/liqf build 20181114");
                 Logger.n("");
                 Console.ForegroundColor = ConsoleColor.Gray;
 				var options = new FilesDeobfuscator.Options();
