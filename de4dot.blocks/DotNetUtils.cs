@@ -21,6 +21,8 @@ using System;
 using System.Collections.Generic;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
+using System.Reflection;
+using System.IO;
 
 namespace de4dot.blocks {
 	public enum FrameworkType {
@@ -114,6 +116,71 @@ namespace de4dot.blocks {
 			next: ;
 			}
 		}
+
+        public static MethodDef FindMethod(ModuleDef module, List<OpCode> OpcodesList)
+        {
+            foreach (var type in module.Types)
+            {
+                foreach (var method in type.Methods)
+                {
+                    if (!method.HasBody)
+                        break;
+                    var instr = method.Body.Instructions;
+                    if (instr.Count < OpcodesList.Count)
+                        continue;
+
+                    for (int i = 0; i < OpcodesList.Count - 1; i++)
+                        if (instr[i].OpCode != OpcodesList[i])
+                            goto next;
+                    return method;
+                    next:;
+                }
+
+            }
+            return null;
+        }
+
+
+        public static Assembly ModuleDefToAssembly(ModuleDef module)
+        {
+            try
+            {
+                MemoryStream fileBytes = new MemoryStream();
+                module.Write(fileBytes);
+
+                byte[] moduleBytes = fileBytes.ToArray();
+
+                return Assembly.Load(moduleBytes);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+
+       
+
+        public static Instruction FindInstruction(IList<Instruction> instructions, OpCode opcode, int repeat)
+        {
+            int i = 0;
+            foreach (var instruction in instructions)
+                if (instruction.OpCode == opcode && i++ == repeat)
+                    return instruction;
+            return null;
+        }
+        public static Instruction FindInstruction(IList<Instruction> instructions, OpCode opcode, int repeat, out int index)
+        {
+            index = -1;
+            int i = 0;
+            for (int j = 0; j < instructions.Count; j++)
+                if (instructions[j].OpCode == opcode && i++ == repeat)
+                {
+                    index = j;
+                    return instructions[j];
+                }
+            return null;
+        }
 
 		public static bool IsDelegate(IType type) {
 			if (type == null)

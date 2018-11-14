@@ -7,6 +7,12 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net35|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DefineConstants />
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\de4dot.cui\de4dot.cui.csproj" />
   </ItemGroup>

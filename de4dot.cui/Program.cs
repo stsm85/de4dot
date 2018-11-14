@@ -86,6 +86,11 @@ namespace de4dot.cui {
 				new de4dot.code.deobfuscators.SmartAssembly.DeobfuscatorInfo(),
 				new de4dot.code.deobfuscators.Spices_Net.DeobfuscatorInfo(),
 				new de4dot.code.deobfuscators.Xenocode.DeobfuscatorInfo(),
+                new de4dot.code.deobfuscators.Manco_NET.DeobfuscatorInfo(),
+                new de4dot.code.deobfuscators.Yano.DeobfuscatorInfo(),
+                new de4dot.code.deobfuscators.NetPack.DeobfuscatorInfo(),
+                new de4dot.code.deobfuscators.NetZ.DeobfuscatorInfo(),
+                new de4dot.code.deobfuscators.PhoneixProtector.DeobfuscatorInfo(),
 			};
 			var dict = new Dictionary<string, IDeobfuscatorInfo>();
 			foreach (var d in local)
@@ -108,10 +113,24 @@ namespace de4dot.cui {
 				Logger.n("");
 				Logger.n("de4dot v{0} Copyright (C) 2011-2015 de4dot@gmail.com", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
 				Logger.n("Latest version and source code: https://github.com/0xd4d/de4dot");
+				Logger.n("Latest version and source code: https://github.com/TheProxyRE/de4dot");
 				Logger.n("");
 
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Logger.n("Mods by:");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+				Logger.n("de4dot Mod by TheProxy");
+				Logger.n("de4dot Reactor v4.9 Mod by PC-RET");
+				Logger.n("de4dot Reactor v5.0 Mod by wuhensoft");
+                Logger.n("");
+                Logger.n("Compiled by stsm/liqf build 20180122");
+                Logger.n("");
+                Console.ForegroundColor = ConsoleColor.Gray;
 				var options = new FilesDeobfuscator.Options();
-				ParseCommandLine(args, options);
+                if (args == null)
+                { }
+                else
+                    ParseCommandLine(args, options);
 				new FilesDeobfuscator(options).DoIt();
 			}
 			catch (ExitException ex) {
